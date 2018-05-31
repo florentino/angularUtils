@@ -388,9 +388,12 @@
                         itemsPerPage = paginationService.getItemsPerPage(paginationId),
                         totalItems = paginationService.getCollectionLength(paginationId);
 
-                    scope.range.lower = (currentPage - 1) * itemsPerPage + 1;
+                    scope.range.lower = (currentPage - 1) * itemsPerPage + 1; // original code 
+                    scope.range.lower = (currentPage - 1) * (itemsPerPage + 1); // modified code, to fix this kind of issue: "Showing 1 - 0 of 0" 
                     scope.range.upper = Math.min(currentPage * itemsPerPage, totalItems);
                     scope.range.total = totalItems;
+                    
+                    scope.$parent.range = scope.range; //to access the range value
                 }
             }
             function isValidPageNumber(num) {
